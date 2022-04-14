@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 const Input = ({ secretWord }) => {
   const [currentGuess, setCurrentGuess] = useState('')
+
   return (
     <div data-test='input-component'>
       <form className='form-inline'>
@@ -17,6 +18,7 @@ const Input = ({ secretWord }) => {
         <button
           data-test='submit-button'
           className='btn btn-primary mb-2'
+          onClick={() => setCurrentGuess('')}
         >
           Submit
         </button>
