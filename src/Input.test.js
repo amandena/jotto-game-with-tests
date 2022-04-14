@@ -30,8 +30,19 @@ test('renders without error', () => {
 })
 
 describe('state controlled input field', () => {
+  let wrapper
+  let originalUseState
+  beforeEach(() => {
+    mockSetCurrentGuess.mockClear()
+    originalUseState = React.useState
+    React.useState = () => ['', mockSetCurrentGuess]
+    wrapper = setup()
+  })
+  afterEach(() => {
+    React.useState = originalUseState
+  })
+
   test('state updates with value of input box upon change', () => {
-    const wrapper = setup()
     const inputBox = findByTestAttr(wrapper, 'input-box')
 
     const mockEvent = { target: { value: 'train' } }
@@ -40,7 +51,6 @@ describe('state controlled input field', () => {
     expect(mockSetCurrentGuess).toHaveBeenCalledWith('train')
   })
   test('field is cleared upon submit button click', () => {
-    const wrapper = setup()
     const submitButton = findByTestAttr(wrapper, 'submit-button')
 
     submitButton.simulate('click')
