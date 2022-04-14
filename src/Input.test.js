@@ -53,7 +53,7 @@ describe('state controlled input field', () => {
   test('field is cleared upon submit button click', () => {
     const submitButton = findByTestAttr(wrapper, 'submit-button')
 
-    submitButton.simulate('click')
+    submitButton.simulate('click', { preventDefault() {} })
     expect(mockSetCurrentGuess).toHaveBeenCalledWith('')
   })
 })
