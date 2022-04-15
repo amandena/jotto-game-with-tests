@@ -10,23 +10,51 @@ jest.mock('react', () => ({
   useState: (initialState) => [initialState, mockSetCurrentGuess]
 }))
 
-const defaultProps = {
-  secretWord: 'party'
+const setup = (success=false, secretWord='party') => {
+  return shallow(<Input success={success} secretWord={secretWord}/>)
 }
 
-const setup = (props={}) => {
-  const setupProps = { ...defaultProps, ...props }
-  return shallow(<Input {...setupProps}/>)
-}
-
-test('does not throw warning with expected props', () => {
-  checkProps(Input, defaultProps)
+describe('render', () => {
+  describe('success is true', () => {
+    let wrapper 
+    beforeEach(() => {
+      wrapper = setup(true)
+    })
+    test('input renders without error', () => {
+      const component = findByTestAttr(wrapper, 'input-component')
+      expect(component.length).toBe(1)
+    })
+    test('input box does not show', () => {
+      const inputBox = findByTestAttr(wrapper, 'input-box')
+      expect(inputBox.exists()).toBe(false)
+    })
+    test('submit button does not show', () => {
+      const submitButton = findByTestAttr(wrapper, 'submit-button')
+      expect(submitButton.exists()).toBe(false)
+    })
+  })
+  describe('success is false', () => {
+    let wrapper 
+    beforeEach(() => {
+      wrapper = setup(false)
+    })
+    test('input renders without error', () => {
+      const component = findByTestAttr(wrapper, 'input-component')
+      expect(component.length).toBe(1)
+    })
+    test('input box shows', () => {
+      const inputBox = findByTestAttr(wrapper, 'input-box')
+      expect(inputBox.exists()).toBe(true)
+    })
+    test('submit button shows', () => {
+      const submitButton = findByTestAttr(wrapper, 'submit-button')
+      expect(submitButton.exists()).toBe(true)
+    })
+  })
 })
 
-test('renders without error', () => {
-  const wrapper = setup()
-  const component = findByTestAttr(wrapper, 'input-component')
-  expect(component.length).toBe(1)
+test('does not throw warning with expected props', () => {
+  checkProps(Input, { secretWord: 'party' })
 })
 
 describe('state controlled input field', () => {
