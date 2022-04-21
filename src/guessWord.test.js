@@ -1,9 +1,9 @@
-import React from 'react'
 import { mount } from 'enzyme'
 import App from './App'
 import { findByTestAttr } from '../test/testUtils'
 
 const setup = (state = {}) => {
+  // TODO: apply state
   const wrapper = mount(<App/>)
 
   const inputBox = findByTestAttr(wrapper, 'input-box')
@@ -41,7 +41,7 @@ describe('some words guessed', () => {
   })
   test('adds row to guessedWords table', () => {
     const guessedWordNodes = findByTestAttr(wrapper, 'guessed-word')
-    expect(guessedWordNodes).toHaveLength(3)
+    expect(guessedWordNodes).toHaveLength(2)
   })
 })
 
@@ -53,13 +53,13 @@ describe('guess secret word', () => {
       success: false,
       guessedWords: [{ guessedWord: 'agile', letterMatchCount: 1 }]
     })
+    const inputBox = findByTestAttr(wrapper, 'submit-button')
+    const mockEvent = { target: { value: 'party' } }
+    inputBox.simulate('change', mockEvent)
+  
+    const submitButton = findByTestAttr(wrapper, 'submit-button')
+    submitButton.simulate('click', { preventDefault() {} })
   })
-  const inputBox = findByTestAttr(wrapper, 'submit-button')
-  const mockEvent = { target: { value: 'party' } }
-  inputBox.simulate('change', mockEvent)
-
-  const submitButton = findByTestAttr(wrapper, 'submit-button')
-  submitButton.simulate('click', { preventDefault() {} })
 
   test('adds row to guessedWords table', () => {
     const guessedWordNodes = findByTestAttr(wrapper, 'guessed-word')
