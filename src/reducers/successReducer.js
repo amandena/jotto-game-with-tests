@@ -1,4 +1,4 @@
-import { actionTypes } from "../actions";
+import { actionTypes } from '../actions'
 
 export default function successReducer(state = false, action) {
   switch(action.type) {
