@@ -22,8 +22,8 @@ export const guessWord = (guessedWord) => {
   }
 }
 
-export const getSecretWord = () => {
+export const getSecretWord = async () => {
   // TODO: write actual action in Redux / context sections
-  return axios.get('http://localhost:3030')
+  return await axios.get('http://localhost:3030')
     .then(response => response.data)
 }
