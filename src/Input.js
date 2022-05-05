@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { guessWord } from './actions'
 
 const Input = ({ secretWord }) => {
   const [currentGuess, setCurrentGuess] = useState('')
   const success = useSelector(state => state.success)
+  const dispatch = useDispatch()
 
   if(success) {
     return <div data-test='input-component'/>
@@ -26,6 +28,7 @@ const Input = ({ secretWord }) => {
           className='btn btn-primary mb-2'
           onClick={(e) => {
             e.preventDefault()
+            dispatch(guessWord(currentGuess))
             setCurrentGuess('')
           }}
         >
